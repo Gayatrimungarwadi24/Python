@@ -1,0 +1,177 @@
+mysql> create database university;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> use university;
+Database changed
+mysql> create table department(dept_name varchar(20) primary key, building varchar (20), budget numeric(15,2));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into department values('CSE','new',200000);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into department values('ETC','new',250000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values('MECH','new',230000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> desc department;
++-----------+---------------+------+-----+---------+-------+
+| Field     | Type          | Null | Key | Default | Extra |
++-----------+---------------+------+-----+---------+-------+
+| dept_name | varchar(20)   | NO   | PRI | NULL    |       |
+| building  | varchar(20)   | YES  |     | NULL    |       |
+| budget    | decimal(15,2) | YES  |     | NULL    |       |
++-----------+---------------+------+-----+---------+-------+
+3 rows in set (0.05 sec)
+
+mysql> select* from department;
++-----------+----------+-----------+
+| dept_name | building | budget    |
++-----------+----------+-----------+
+| CSE       | new      | 200000.00 |
+| ETC       | new      | 250000.00 |
+| MECH      | new      | 230000.00 |
++-----------+----------+-----------+
+3 rows in set (0.03 sec)
+
+mysql> create table instructor(ID char(5) primary key, name varchar(20) not null, dept_name varchar(20), salary numeric(8,2), foreign key(dept_name) references depart
+ment(dept_name) on delete cascade on update cascade);
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc instructor;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| ID        | char(5)      | NO   | PRI | NULL    |       |
+| name      | varchar(20)  | NO   |     | NULL    |       |
+| dept_name | varchar(20)  | YES  | MUL | NULL    |       |
+| salary    | decimal(8,2) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into instructor values('10211','Ram','CSE',66000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into instructor values('10212','Laxman','ETC',60000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into instructor values('10213','Shyam','MECH',70000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> desc instructor;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| ID        | char(5)      | NO   | PRI | NULL    |       |
+| name      | varchar(20)  | NO   |     | NULL    |       |
+| dept_name | varchar(20)  | YES  | MUL | NULL    |       |
+| salary    | decimal(8,2) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select* from instructor;
++-------+--------+-----------+----------+
+| ID    | name   | dept_name | salary   |
++-------+--------+-----------+----------+
+| 10211 | Ram    | CSE       | 66000.00 |
+| 10212 | Laxman | ETC       | 60000.00 |
+| 10213 | Shyam  | MECH      | 70000.00 |
++-------+--------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select* from department;
++-----------+----------+-----------+
+| dept_name | building | budget    |
++-----------+----------+-----------+
+| CSE       | new      | 200000.00 |
+| ETC       | new      | 250000.00 |
+| MECH      | new      | 230000.00 |
++-----------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update department set dept_name='ENTC' where dept_name='ETC';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from department;
++-----------+----------+-----------+
+| dept_name | building | budget    |
++-----------+----------+-----------+
+| CSE       | new      | 200000.00 |
+| ENTC      | new      | 250000.00 |
+| MECH      | new      | 230000.00 |
++-----------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select* from instructor;
++-------+--------+-----------+----------+
+| ID    | name   | dept_name | salary   |
++-------+--------+-----------+----------+
+| 10211 | Ram    | CSE       | 66000.00 |
+| 10212 | Laxman | ENTC      | 60000.00 |
+| 10213 | Shyam  | MECH      | 70000.00 |
++-------+--------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from department where dept_name='ENTC';
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select* from department;
++-----------+----------+-----------+
+| dept_name | building | budget    |
++-----------+----------+-----------+
+| CSE       | new      | 200000.00 |
+| MECH      | new      | 230000.00 |
++-----------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select* from instructor;
++-------+-------+-----------+----------+
+| ID    | name  | dept_name | salary   |
++-------+-------+-----------+----------+
+| 10211 | Ram   | CSE       | 66000.00 |
+| 10213 | Shyam | MECH      | 70000.00 |
++-------+-------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> create table s1(rn int, class char(4) default 'TY', marks float(4,2));
+Query OK, 0 rows affected, 1 warning (0.06 sec)
+
+mysql> insert into s1(rn, marks) values(1,78);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select* from s1;
++------+-------+-------+
+| rn   | class | marks |
++------+-------+-------+
+|    1 | TY    | 78.00 |
++------+-------+-------+
+1 row in set (0.00 sec)
+
+mysql> create table account1(acc_no int, brnm varchar(10), balance numeric(6,1), check(balance>20000));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into account1 values(11,"Shahupuri",6000);
+ERROR 3819 (HY000): Check constraint 'account1_chk_1' is violated.
+mysql> insert into account1 values(11,"Shahupuri",60000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select* from account1;
++--------+-----------+---------+
+| acc_no | brnm      | balance |
++--------+-----------+---------+
+|     11 | Shahupuri | 60000.0 |
++--------+-----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select concat(dept_name, building) from department;
++-----------------------------+
+| concat(dept_name, building) |
++-----------------------------+
+| CSEnew                      |
+| MECHnew                     |
++-----------------------------+
+2 rows in set (0.03 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------------------------

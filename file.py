@@ -1,0 +1,5 @@
+file=open("exp4.txt","r")
+data=file.read()
+print(data)
+print(type(data))
+file.close()
